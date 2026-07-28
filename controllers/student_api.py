@@ -26,11 +26,17 @@ class StudentExamAPIController(http.Controller):
             ('access_code_active', '=', True),
         ], limit=1)
         if student:
-            # Find active enrollment for this student
+            # Prefer an active enrollment for live classes. If the student has
+            # graduated and the access code is still active, keep the dashboard
+            # available as a learning archive from the latest enrollment.
             enrollment = request.env['siswa.kursus.enrollment'].sudo().search([
                 ('siswa_id', '=', student.id),
                 ('status', '=', 'aktif'),
             ], order='tanggal_mulai desc', limit=1)
+            if not enrollment:
+                enrollment = request.env['siswa.kursus.enrollment'].sudo().search([
+                    ('siswa_id', '=', student.id),
+                ], order='tanggal_mulai desc', limit=1)
             return student, enrollment
 
         # Legacy: try enrollment-level access code (EXM- or old ST- on enrollment)
@@ -91,6 +97,7 @@ class StudentExamAPIController(http.Controller):
             'start_time': str(exam.start_time) if exam.start_time else '',
             'time_limit_minutes': exam.time_limit_minutes,
             'remaining_seconds': self._exam_remaining_seconds(exam, is_school),
+            'attempt_number': getattr(exam, 'attempt_number', 1) or 1,
             'source': 'school' if is_school else 'student',
         }
 
