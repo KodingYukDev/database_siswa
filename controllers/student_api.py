@@ -463,26 +463,10 @@ class StudentExamAPIController(http.Controller):
                         'score': line.score,
                     })
 
-            # 3b. Learning materials and portfolio are student-facing data.
+            # 3b. Portfolio is student-facing data. Internal module documents
+            # must never be exposed through the student dashboard API.
             def _safe_field(record, field_name, default=''):
                 return record[field_name] if record and field_name in record._fields else default
-
-            materials = []
-            if modul:
-                for material in modul.materi_ids:
-                    if 'is_active' in material._fields and not material.is_active:
-                        continue
-                    materials.append({
-                        'id': material.id,
-                        'name': _safe_field(material, 'name'),
-                        'description': _safe_field(material, 'description'),
-                        'file_name': _safe_field(material, 'file_name'),
-                        'file_type': _safe_field(material, 'file_type', 'other') or 'other',
-                        'file_size': _safe_field(material, 'file_size', 0) or 0,
-                        'page_count': _safe_field(material, 'page_count', 0) or 0,
-                        'version': _safe_field(material, 'version'),
-                        'external_url': _safe_field(modul, 'link_materi'),
-                    })
 
             portfolio = []
             portfolio_model = request.env.get('student.portfolio.project')
@@ -530,7 +514,6 @@ class StudentExamAPIController(http.Controller):
                 'attendance_history': attendance_history,
                 'performance': performance,
                 'certificate': certificate,
-                'materials': materials,
                 'portfolio': portfolio,
                 'school': school_data,
                 'exams': exams,
