@@ -15,6 +15,19 @@ Modul data master siswa KodingYuk. Menyimpan semua data siswa aktif/non-aktif, e
 
 **User utama:** Admin Akademik, Trainer, Tim Operasional
 
+## Hak Akses
+
+- **Viewer:** membaca data akademik siswa tanpa mengubah record.
+- **Trainer:** menjalankan ujian, penilaian, rapot, dan portofolio tanpa hak
+  menghapus record akademik.
+- **Manager:** mengelola master siswa, enrollment, konfigurasi, dan seluruh
+  record operasional.
+
+Internal user tanpa grup Students tidak dapat membuka modul. Matriks rinci dan
+rencana record rule trainer tersedia di
+[`docs/ACCESS_MATRIX.md`](docs/ACCESS_MATRIX.md). Prosedur pemulihan tersedia di
+[`docs/ROLLBACK.md`](docs/ROLLBACK.md).
+
 ---
 
 ## Model Odoo
@@ -51,6 +64,7 @@ git clone https://github.com/kodingyuk/core_siswa_odoo_academic.git
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
+| 17.0.2.0.0 | 2026-08-11 | Viewer/Trainer/Manager ACL, menu guards, dan proteksi field sensitif |
 | 17.0.1.0.2 | — | Tambah portofolio dan enrollment |
 | 17.0.1.0.0 | — | Initial release |
 

@@ -6,6 +6,7 @@
             id="menu_student_database_root"
             name="Database Siswa"
             action="action_m_siswa"
+            groups="students.group_student_viewer"
             sequence="10"
             web_icon="students,static/description/icon.png"/>
 
@@ -14,6 +15,7 @@
             name="2. Program &amp; Progress"
             parent="menu_student_database_root"
             action="action_siswa_kursus_enrollment"
+            groups="students.group_student_viewer"
             sequence="20"/>
 
         <menuitem
@@ -21,12 +23,14 @@
             name="4. Finalisasi Rapot"
             parent="menu_student_database_root"
             action="action_siswa_kursus_penilaian_sertifikat"
+            groups="students.group_student_viewer"
             sequence="30"/>
 
         <menuitem
             id="menu_student_config"
             name="Konfigurasi"
             parent="menu_student_database_root"
+            groups="students.group_student_manager"
             sequence="99"/>
 
         <menuitem
@@ -34,6 +38,7 @@
             name="Master Tingkat"
             parent="menu_student_config"
             action="action_m_level_siswa"
+            groups="students.group_student_manager"
             sequence="1"/>
 
         <menuitem
@@ -41,6 +46,7 @@
             name="Master Jenis Kelas"
             parent="menu_student_config"
             action="action_m_class_type"
+            groups="students.group_student_manager"
             sequence="2"/>
 
     </data>

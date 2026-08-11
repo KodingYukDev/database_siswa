@@ -8,25 +8,29 @@
             <field name="arch" type="xml">
                 <form string="Pendaftaran Kursus">
                     <header>
-                        <button name="%(students.action_siswa_kursus_exam_start_wizard)d" 
+                        <button name="%(students.action_siswa_kursus_exam_start_wizard)d"
+                                groups="students.group_student_trainer"
                                 type="action" 
                                 string="Mulai Ujian / Remedial"
                                 class="oe_highlight"
                                 invisible="jumlah_pertemuan_diikuti &lt; jumlah_pertemuan_wajib or status == 'lulus'"
                         />
-                        <button name="action_generate_access_code" 
+                        <button name="action_generate_access_code"
+                                groups="students.group_student_trainer"
                                 type="object" 
                                 string="Generate Kode Akses Siswa"
                                 class="oe_highlight"
                                 invisible="not exam_ids"
                         />
-                        <button name="action_deactivate_access_code" 
+                        <button name="action_deactivate_access_code"
+                                groups="students.group_student_trainer"
                                 type="object" 
                                 string="Nonaktifkan Kode Akses"
                                 class="btn-secondary"
                                 invisible="not access_code_active"
                         />
                         <button name="action_create_or_view_certificate_assessment"
+                                groups="students.group_student_trainer"
                                 type="object"
                                 string="Penilaian Sertifikat"
                                 class="oe_highlight"

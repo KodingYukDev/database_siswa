@@ -28,5 +28,6 @@
         name="Aspek Rubrik Rapot"
         parent="menu_student_config"
         action="action_rapot_rubrik_aspek"
+        groups="students.group_student_manager"
         sequence="3"/>
 </odoo>

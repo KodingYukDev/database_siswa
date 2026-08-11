@@ -10,6 +10,7 @@
                 <form string="Penilaian Sertifikat Kursus">
                     <header>
                         <button name="action_set_done" type="object" string="Selesai Penilaian"
+                                groups="students.group_student_trainer"
                                 class="oe_highlight"
                                 invisible="state == 'done'"
                                 confirm="Apakah Anda yakin ingin menyelesaikan penilaian ini? Status enrollment siswa akan diperbarui menjadi 'Lulus'."/>
@@ -62,6 +63,7 @@
                             </page>
                             <page string="2. Rubrik Umum">
                                 <button name="action_load_rubrik" type="object" string="Muat Aspek dari Master"
+                                        groups="students.group_student_trainer"
                                         class="btn-secondary mb-2" invisible="state == 'done'"/>
                                 <field name="rubrik_line_ids" readonly="state == 'done'">
                                     <tree editable="bottom">

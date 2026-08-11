@@ -42,12 +42,14 @@ class StudentCourseEnrollment(models.Model):
         string='Kode Akses Ujian',
         copy=False,
         readonly=True,
-        help='Kode akses yang digenerate untuk siswa login di Student Dashboard'
+        help='Kode akses yang digenerate untuk siswa login di Student Dashboard',
+        groups='students.group_student_trainer',
     )
     access_code_active = fields.Boolean(
         string='Kode Akses Aktif',
         default=False,
-        copy=False
+        copy=False,
+        groups='students.group_student_trainer',
     )
 
     jumlah_pertemuan_wajib = fields.Integer(

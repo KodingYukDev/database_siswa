@@ -9,12 +9,14 @@
                 <form string="Profil Siswa">
                     <header>
                         <button name="action_generate_access_code"
+                                groups="students.group_student_manager"
                                 type="object"
                                 string="🔑 Generate Kode Akses"
                                 class="oe_highlight"
                                 invisible="access_code_active == True"
                         />
                         <button name="action_deactivate_access_code"
+                                groups="students.group_student_manager"
                                 type="object"
                                 string="Nonaktifkan Kode"
                                 invisible="access_code_active == False"

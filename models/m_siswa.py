@@ -30,7 +30,12 @@ class StudentProfile(models.Model):
     name = fields.Char(string='Nama Siswa', required=True, tracking=True) # New direct name field
     nis = fields.Char(string='NIS', tracking=True)
     email = fields.Char(string='Email', tracking=True)
-    password = fields.Char(string='Password', tracking=True)
+    password = fields.Char(
+        string='Password',
+        tracking=True,
+        copy=False,
+        groups='students.group_student_manager',
+    )
 
     class_name = fields.Char(string='Kelas', help="Contoh: 2 SD, TK B")
     
@@ -135,12 +140,14 @@ class StudentProfile(models.Model):
         string='Kode Akses Dashboard',
         copy=False,
         readonly=True,
-        help='Kode akses siswa untuk login di Student Dashboard (berlaku untuk semua kursus)'
+        help='Kode akses siswa untuk login di Student Dashboard (berlaku untuk semua kursus)',
+        groups='students.group_student_trainer',
     )
     access_code_active = fields.Boolean(
         string='Kode Akses Aktif',
         default=False,
-        copy=False
+        copy=False,
+        groups='students.group_student_trainer',
     )
 
     enrollment_ids = fields.One2many(

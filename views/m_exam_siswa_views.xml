@@ -64,9 +64,9 @@
             <field name="arch" type="xml">
                 <form string="Ujian Siswa">
                     <header>
-                        <button name="action_start" string="Mulai Ujian" type="object" class="oe_highlight" invisible="state != 'draft'"/>
-                        <button name="action_trainer_done" string="Selesaikan Penilaian" type="object" class="oe_highlight" invisible="state not in ['draft', 'in_progress', 'submitted']"/>
-                        <button name="action_reset_to_draft" string="Reset ke Draft" type="object" class="btn-danger" confirm="Apakah Anda yakin ingin me-reset ujian ini? Semua jawaban dan nilai akan dihapus." groups="base.group_erp_manager,students.group_student_trainer"/>
+                        <button name="action_start" string="Mulai Ujian" type="object" class="oe_highlight" groups="students.group_student_trainer" invisible="state != 'draft'"/>
+                        <button name="action_trainer_done" string="Selesaikan Penilaian" type="object" class="oe_highlight" groups="students.group_student_trainer" invisible="state not in ['draft', 'in_progress', 'submitted']"/>
+                        <button name="action_reset_to_draft" string="Reset ke Draft" type="object" class="btn-danger" confirm="Apakah Anda yakin ingin me-reset ujian ini? Semua jawaban dan nilai akan dihapus." groups="students.group_student_trainer"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,submitted,done"/>
                     </header>
                     <sheet>
@@ -140,6 +140,7 @@
                   name="3. Ujian Siswa"
                   parent="menu_student_database_root"
                   action="action_siswa_kursus_exam"
+                  groups="students.group_student_viewer"
                   sequence="30"/>
 
     </data>
