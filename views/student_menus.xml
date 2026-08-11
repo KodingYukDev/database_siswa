@@ -11,14 +11,14 @@
 
         <menuitem
             id="menu_siswa_kursus_enrollment"
-            name="Pendaftaran Kursus"
+            name="2. Program &amp; Progress"
             parent="menu_student_database_root"
             action="action_siswa_kursus_enrollment"
             sequence="20"/>
 
         <menuitem
             id="menu_siswa_kursus_penilaian_sertifikat"
-            name="Rapot / Penilaian Sertifikat"
+            name="4. Finalisasi Rapot"
             parent="menu_student_database_root"
             action="action_siswa_kursus_penilaian_sertifikat"
             sequence="30"/>

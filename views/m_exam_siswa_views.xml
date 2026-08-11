@@ -137,7 +137,7 @@
 
         <!-- Menuitem -->
         <menuitem id="menu_siswa_kursus_exam"
-                  name="Ujian Siswa"
+                  name="3. Ujian Siswa"
                   parent="menu_student_database_root"
                   action="action_siswa_kursus_exam"
                   sequence="30"/>

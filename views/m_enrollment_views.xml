@@ -41,28 +41,50 @@
                                 <field name="exam_ids" widget="statinfo" string="Ujian"/>
                             </button>
                         </div>
+                        <div class="alert alert-info" role="alert" invisible="status != 'aktif' or jumlah_pertemuan_diikuti &gt;= jumlah_pertemuan_wajib">
+                            <strong>Tahap 2 dari 4 · Pembelajaran berjalan</strong><br/>
+                            Lengkapi pertemuan wajib terlebih dahulu. Setelah terpenuhi, admin dapat membuka ujian dari tombol di atas.
+                        </div>
+                        <div class="alert alert-warning" role="alert" invisible="status != 'aktif' or jumlah_pertemuan_diikuti &lt; jumlah_pertemuan_wajib or exam_ids">
+                            <strong>Tahap 3 dari 4 · Siap dibuatkan ujian</strong><br/>
+                            Seluruh pertemuan wajib sudah terpenuhi. Klik <em>Mulai Ujian / Remedial</em> untuk melanjutkan.
+                        </div>
+                        <div class="alert alert-primary" role="alert" invisible="status != 'aktif' or not exam_ids">
+                            <strong>Tahap 3 dari 4 · Ujian dan penilaian</strong><br/>
+                            Pantau hasil melalui tombol Ujian, lalu buka Penilaian Akhir untuk menyiapkan rapot.
+                        </div>
+                        <div class="alert alert-success" role="alert" invisible="status != 'lulus'">
+                            <strong>Tahap 4 dari 4 · Lulus, rapot siap dicetak</strong><br/>
+                            Nilai telah difinalisasi. Buka Penilaian Akhir untuk meninjau dan mencetak rapot.
+                        </div>
+                        <div class="alert alert-secondary" role="alert" invisible="status != 'berhenti'">
+                            <strong>Program dihentikan</strong><br/>
+                            Record tetap tersimpan sebagai riwayat kursus siswa.
+                        </div>
                         <group>
-                            <group>
+                            <group string="1. Data Pendaftaran">
                                 <field name="name" readonly="1"/>
                                 <field name="siswa_id"/>
                                 <field name="modul_id"/>
                             </group>
-                            <group>
+                            <group string="Status Program">
                                 <field name="status"/>
                                 <field name="tanggal_mulai"/>
                                 <field name="tanggal_selesai"/>
-                                <field name="access_code"/>
-                                <field name="access_code_active"/>
                             </group>
                         </group>
-                        <group>
+                        <group string="2. Progress Pembelajaran">
                             <group>
                                 <field name="jumlah_pertemuan_wajib"/>
                                 <field name="jumlah_pertemuan_diikuti"/>
                             </group>
+                            <group string="Akses Dashboard Siswa">
+                                <field name="access_code" readonly="1"/>
+                                <field name="access_code_active" readonly="1"/>
+                            </group>
                         </group>
                         <notebook>
-                            <page string="Hasil Penilaian" invisible="status != 'lulus'">
+                            <page string="4. Hasil Akhir" invisible="status != 'lulus'">
                                 <group>
                                     <field name="average_score" readonly="1"/>
                                 </group>
@@ -76,6 +98,70 @@
                         </notebook>
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+        <record id="view_siswa_kursus_enrollment_kanban" model="ir.ui.view">
+            <field name="name">siswa.kursus.enrollment.kanban.flow</field>
+            <field name="model">siswa.kursus.enrollment</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="status" class="o_kanban_small_column">
+                    <field name="name"/>
+                    <field name="siswa_id"/>
+                    <field name="modul_id"/>
+                    <field name="status"/>
+                    <field name="tanggal_mulai"/>
+                    <field name="tanggal_selesai"/>
+                    <field name="jumlah_pertemuan_wajib"/>
+                    <field name="jumlah_pertemuan_diikuti"/>
+                    <field name="exam_ids"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <strong class="o_kanban_record_title"><field name="siswa_id"/></strong>
+                                    <span t-if="record.status.raw_value == 'aktif'" class="badge rounded-pill text-bg-primary">Berjalan</span>
+                                    <span t-if="record.status.raw_value == 'lulus'" class="badge rounded-pill text-bg-success">Lulus</span>
+                                    <span t-if="record.status.raw_value == 'berhenti'" class="badge rounded-pill text-bg-secondary">Berhenti</span>
+                                </div>
+                                <div class="text-muted mb-2"><i class="fa fa-book me-1"/><field name="modul_id"/></div>
+                                <div class="d-flex justify-content-between border-top pt-2 mt-2">
+                                    <span><i class="fa fa-calendar-check-o me-1"/>Pertemuan</span>
+                                    <strong><field name="jumlah_pertemuan_diikuti"/> / <field name="jumlah_pertemuan_wajib"/></strong>
+                                </div>
+                                <div class="d-flex justify-content-between mt-1">
+                                    <span><i class="fa fa-pencil-square-o me-1"/>Ujian</span>
+                                    <strong><t t-esc="record.exam_ids.raw_value.length"/></strong>
+                                </div>
+                                <div class="text-muted small mt-2">
+                                    Mulai: <field name="tanggal_mulai"/>
+                                    <span t-if="record.tanggal_selesai.raw_value"> · Selesai: <field name="tanggal_selesai"/></span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_siswa_kursus_enrollment_search_flow" model="ir.ui.view">
+            <field name="name">siswa.kursus.enrollment.search.flow</field>
+            <field name="model">siswa.kursus.enrollment</field>
+            <field name="arch" type="xml">
+                <search string="Cari Program Siswa">
+                    <field name="name"/>
+                    <field name="siswa_id"/>
+                    <field name="modul_id"/>
+                    <separator/>
+                    <filter name="filter_aktif" string="Sedang Berjalan" domain="[('status', '=', 'aktif')]"/>
+                    <filter name="filter_lulus" string="Sudah Lulus" domain="[('status', '=', 'lulus')]"/>
+                    <filter name="filter_berhenti" string="Berhenti" domain="[('status', '=', 'berhenti')]"/>
+                    <group expand="0" string="Kelompokkan">
+                        <filter name="group_status" string="Tahap" context="{'group_by': 'status'}"/>
+                        <filter name="group_modul" string="Kursus/Modul" context="{'group_by': 'modul_id'}"/>
+                        <filter name="group_siswa" string="Siswa" context="{'group_by': 'siswa_id'}"/>
+                    </group>
+                </search>
             </field>
         </record>
 
@@ -98,9 +184,15 @@
         </record>
 
         <record id="action_siswa_kursus_enrollment" model="ir.actions.act_window">
-            <field name="name">Pendaftaran Kursus</field>
+            <field name="name">Alur Program Siswa</field>
             <field name="res_model">siswa.kursus.enrollment</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_siswa_kursus_enrollment_search_flow"/>
+            <field name="context">{'search_default_group_status': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Belum ada program siswa.</p>
+                <p>Buat pendaftaran untuk memulai alur pembelajaran, ujian, penilaian, dan rapot.</p>
+            </field>
         </record>
 
     </data>

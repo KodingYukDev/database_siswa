@@ -19,8 +19,15 @@
                                 string="Nonaktifkan Kode"
                                 invisible="access_code_active == False"
                         />
+                        <field name="status" widget="statusbar" statusbar_visible="active,leave,graduated,inactive"/>
                     </header>
                     <sheet>
+                        <div class="alert alert-info" role="alert" invisible="status != 'active'">
+                            <strong>Profil siswa aktif</strong> · Gunakan tab Riwayat Kursus untuk melihat program yang sedang berjalan dan hasil sebelumnya.
+                        </div>
+                        <div class="alert alert-success" role="alert" invisible="status != 'graduated'">
+                            <strong>Siswa berstatus lulus</strong> · Riwayat program dan rapot tetap tersedia pada record ini.
+                        </div>
                         <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
                         <group>
                             <group string="Data Siswa">
