@@ -8,7 +8,7 @@
     'author': "PT Koding Yuk Academy", # Anda bisa ganti dengan nama Anda
     'website': "https://kodingyuk.id", # Ganti jika perlu
     'category': 'Education',
-    'version': '17.0.2.0.0',
+    'version': '17.0.2.0.1',
     'depends': [
         'base',
         'mail',     # Untuk chatter (log & histori)

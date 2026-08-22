@@ -125,8 +125,8 @@
                                                         <form>
                                                             <group>
                                                                 <field name="media_type"/>
-                                                                <field name="file_data" filename="file_name" widget="binary" attrs="{'invisible': [('file_url', '!=', False)]}"/>
-                                                                <field name="file_url" widget="url" attrs="{'invisible': [('file_url', '=', False)]}"/>
+                                                                <field name="file_data" filename="file_name" widget="binary" invisible="file_url"/>
+                                                                <field name="file_url" widget="url" invisible="not file_url"/>
                                                                 <field name="file_name" invisible="1"/>
                                                                 <field name="sequence"/>
                                                             </group>
