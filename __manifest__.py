@@ -8,7 +8,7 @@
     'author': "PT Koding Yuk Academy", # Anda bisa ganti dengan nama Anda
     'website': "https://kodingyuk.id", # Ganti jika perlu
     'category': 'Education',
-    'version': '17.0.2.0.1',
+    'version': '17.0.2.0.2',
     'depends': [
         'base',
         'mail',     # Untuk chatter (log & histori)
@@ -27,6 +27,9 @@
 
         # Data
         'data/rapot_rubrik_data.xml',
+
+        # Root menu is referenced by feature views below.
+        'views/student_root_menu.xml',
 
         # Report
         'report/rapot_paperformat.xml',

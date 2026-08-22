@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_student_database_root"
+              name="Database Siswa"
+              groups="students.group_student_viewer"
+              sequence="10"
+              web_icon="students,static/description/icon.png"/>
+</odoo>
